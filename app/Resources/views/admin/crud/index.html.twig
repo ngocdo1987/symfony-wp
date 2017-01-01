@@ -1,0 +1,21 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block content %}
+	{% if cruds|length > 0 %}
+		<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+			<thead>
+	            <tr>
+	            	
+	                <th></th>
+	            </tr>
+	        </thead>
+		</table>
+		{{ cruds }}
+	{% else %}
+		<center>
+			<font color="red">
+				No {{ plural }} existed!
+			</font>
+		</center>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Tags list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tagname</th>
+                <th>Tagslug</th>
+                <th>Tagdescription</th>
+                <th>Tagmt</th>
+                <th>Tagmd</th>
+                <th>Tagmk</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tag in tags %}
+            <tr>
+                <td><a href="{{ path('admin_tag_show', { 'id': tag.id }) }}">{{ tag.id }}</a></td>
+                <td>{{ tag.tagName }}</td>
+                <td>{{ tag.tagSlug }}</td>
+                <td>{{ tag.tagDescription }}</td>
+                <td>{{ tag.tagMt }}</td>
+                <td>{{ tag.tagMd }}</td>
+                <td>{{ tag.tagMk }}</td>
+                <td>{% if tag.createdAt %}{{ tag.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if tag.updatedAt %}{{ tag.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_tag_show', { 'id': tag.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_tag_edit', { 'id': tag.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_tag_new') }}">Create a new tag</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Tag</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tag.id }}</td>
+            </tr>
+            <tr>
+                <th>Tagname</th>
+                <td>{{ tag.tagName }}</td>
+            </tr>
+            <tr>
+                <th>Tagslug</th>
+                <td>{{ tag.tagSlug }}</td>
+            </tr>
+            <tr>
+                <th>Tagdescription</th>
+                <td>{{ tag.tagDescription }}</td>
+            </tr>
+            <tr>
+                <th>Tagmt</th>
+                <td>{{ tag.tagMt }}</td>
+            </tr>
+            <tr>
+                <th>Tagmd</th>
+                <td>{{ tag.tagMd }}</td>
+            </tr>
+            <tr>
+                <th>Tagmk</th>
+                <td>{{ tag.tagMk }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if tag.createdAt %}{{ tag.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if tag.updatedAt %}{{ tag.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_tag_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_tag_edit', { 'id': tag.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
