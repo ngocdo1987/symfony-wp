@@ -35,4 +35,6 @@
 			</font>
 		</center>
 	<?php endif; ?>
+
+	<a href="<?= $view['router']->path('admin.'.$plural.'.new') ?>" class="btn btn-primary">ADD NEW</a>
 <?php $view['slots']->stop() ?>

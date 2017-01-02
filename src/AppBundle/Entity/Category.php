@@ -184,7 +184,7 @@ class Category
     /**
      * Get parentId
      *
-     * @return integer
+     * @return int
      */
     public function getParentId()
     {

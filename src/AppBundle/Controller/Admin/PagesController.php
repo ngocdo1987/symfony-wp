@@ -12,10 +12,18 @@ class PagesController extends CrudController
     protected $plural = 'pages';
 
     /**
-     * @Route("/admin/list_pages", name="admin.pages")
+     * @Route("/admin/pages", name="admin.pages")
      */
     public function indexAction(Request $request)
     {
         return parent::indexAction($request);
+    }
+
+    /**
+     * @Route("/admin/pages/new", name="admin.pages.new")
+     */
+    public function newAction(Request $request)
+    {
+        return parent::newAction($request);
     }
 }

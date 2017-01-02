@@ -18,4 +18,12 @@ class TagsController extends CrudController
     {
         return parent::indexAction($request);
     }
+
+    /**
+     * @Route("/admin/tags/new", name="admin.tags.new")
+     */
+    public function newAction(Request $request)
+    {
+        return parent::newAction($request);
+    }
 }

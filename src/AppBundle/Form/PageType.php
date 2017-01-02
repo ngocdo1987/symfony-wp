@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PageType extends AbstractType
 {
@@ -13,7 +15,16 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('pageTitle')->add('pageSlug')->add('pageImage')->add('pageContent')->add('pageStatus')->add('pageMt')->add('pageMd')->add('pageMk')->add('createdAt')->add('updatedAt')        ;
+        $builder->add('pageTitle', TextType::class)
+                ->add('pageSlug', TextType::class)
+                ->add('categoryDescription', TextareaType::class)
+                ->add('parentId', EntityType::class, [
+                    'class' => 'AppBundle:Category',
+                    'choice_label' => 'categoryName'
+                ])
+                ->add('categoryMt', TextType::class)
+                ->add('categoryMd', TextareaType::class)
+                ->add('categoryMk', TextareaType::class);
     }
     
     /**

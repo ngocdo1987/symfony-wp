@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class TagType extends AbstractType
 {
@@ -13,7 +15,12 @@ class TagType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('tagName')->add('tagSlug')->add('tagDescription')->add('tagMt')->add('tagMd')->add('tagMk')->add('createdAt')->add('updatedAt')        ;
+        $builder->add('tagName', TextType::class)
+                ->add('tagSlug', TextType::class)
+                ->add('tagDescription', TextareaType::class)
+                ->add('tagMt', TextType::class)
+                ->add('tagMd', TextareaType::class)
+                ->add('tagMk', TextareaType::class);
     }
     
     /**

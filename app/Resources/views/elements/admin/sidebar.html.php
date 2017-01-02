@@ -13,7 +13,7 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a href="<?= $view['router']->path('admin.dashboard') ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-edit fa-fw"></i> Posts<span class="fa arrow"></span></a>
@@ -25,22 +25,22 @@
                         <a href="#">Add New</a>
                     </li>
                     <li>
-                        <a href="#">Categories</a>
+                        <a href="<?= $view['router']->path('admin.categories') ?>">Categories</a>
                     </li>
                     <li>
-                        <a href="#">Tags</a>
+                        <a href="<?= $view['router']->path('admin.tags') ?>">Tags</a>
                     </li>
                 </ul>
             </li>
             
             <li>
-                <a href="#"><i class="fa fa-files-o fa-fw"></i> Pages<span class="fa arrow"></span></a>
+                <a href="<?= $view['router']->path('admin.pages') ?>"><i class="fa fa-files-o fa-fw"></i> Pages<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">All Pages</a>
+                        <a href="<?= $view['router']->path('admin.pages') ?>">All Pages</a>
                     </li>
                     <li>
-                        <a href="#">Add New</a>
+                        <a href="<?= $view['router']->path('admin.pages.new') ?>">Add New</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

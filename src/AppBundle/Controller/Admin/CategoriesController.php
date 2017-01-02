@@ -18,4 +18,12 @@ class CategoriesController extends CrudController
     {
         return parent::indexAction($request);
     }
+
+    /**
+     * @Route("/admin/categories/new", name="admin.categories.new")
+     */
+    public function newAction(Request $request)
+    {
+        return parent::newAction($request);
+    }
 }

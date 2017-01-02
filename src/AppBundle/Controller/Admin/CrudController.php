@@ -43,9 +43,26 @@ class CrudController extends Controller
 
 	public function newAction(Request $request)
 	{
-		$mt = 'Add '.$this->singular;
+		$model = '\AppBundle\Entity\\'.ucfirst($this->singular);
+		$crud = new $model;
+
+		$form = $this->createForm('AppBundle\Form\\'.ucfirst($this->singular).'Type', $crud);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($crud);
+            $em->flush($crud);
+
+            return $this->redirectToRoute('admin.tags');
+        }
+
 		return $this->render('admin/crud/new.html.php', array(
-			'mt' => $mt
+			'singular' => $this->singular,
+			'plural' => $this->plural,
+			'config' => $this->config,
+			'crud' => $crud,
+			'form' => $form->createView()
 		));
 	}
 
