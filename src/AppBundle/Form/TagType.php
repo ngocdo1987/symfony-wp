@@ -15,12 +15,12 @@ class TagType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('tagName', TextType::class)
-                ->add('tagSlug', TextType::class)
-                ->add('tagDescription', TextareaType::class)
-                ->add('tagMt', TextType::class)
-                ->add('tagMd', TextareaType::class)
-                ->add('tagMk', TextareaType::class);
+        $builder->add('tagName', TextType::class);
+        $builder->add('tagSlug', TextType::class);
+        $builder->add('tagDescription', TextareaType::class);
+        $builder->add('tagMt', TextType::class);
+        $builder->add('tagMd', TextareaType::class);
+        $builder->add('tagMk', TextareaType::class);
     }
     
     /**

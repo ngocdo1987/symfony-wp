@@ -15,15 +15,8 @@ class CrudController extends Controller
 
 	public function __construct()
 	{
-		if(file_exists('../app/config/cms/'.$this->singular.'.json'))
-		{
-			$config = file_get_contents('../app/config/cms/'.$this->singular.'.json');
-			$config = json_decode($config);
-		}
-		else
-		{
-			$config = null;
-		}
+		$cfg_file = '../app/config/cms/'.$this->singular.'.json';
+		$config = file_exists($cfg_file) ? json_decode(file_get_contents($cfg_file)) : null;
 
 		$this->config = $config;
 	}
@@ -34,11 +27,11 @@ class CrudController extends Controller
 
         $cruds = $em->getRepository('AppBundle:'.ucfirst($this->singular))->findAll();
         
-		return $this->render('admin/crud/index.html.php', array(
+		return $this->render('admin/crud/index.html.php', [
             'plural' => $this->plural,
             'config' => $this->config,
             'cruds' => $cruds
-        ));
+        ]);
 	}
 
 	public function newAction(Request $request)
@@ -54,16 +47,16 @@ class CrudController extends Controller
             $em->persist($crud);
             $em->flush($crud);
 
-            return $this->redirectToRoute('admin.tags');
+            return $this->redirectToRoute('admin.'.$this->plural);
         }
 
-		return $this->render('admin/crud/new.html.php', array(
+		return $this->render('admin/crud/new.html.php', [
 			'singular' => $this->singular,
 			'plural' => $this->plural,
 			'config' => $this->config,
 			'crud' => $crud,
 			'form' => $form->createView()
-		));
+		]);
 	}
 
 	public function showAction()

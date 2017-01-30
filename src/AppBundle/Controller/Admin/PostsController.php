@@ -6,27 +6,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class PostsController extends Controller
+class PostsController extends CrudController
 {
+    protected $singular = 'post';
+    protected $plural = 'posts';
+
     /**
      * @Route("/admin/posts", name="admin.posts")
      */
     public function indexAction(Request $request)
     {
-        $mt = 'List posts';
-        return $this->render('admin/posts/index.html.twig', array(
-            'mt' => $mt
-        ));
+        return parent::indexAction($request);
     }
 
     /**
-     * @Route("/admin/posts/add", name="admin.posts.add")
+     * @Route("/admin/posts/new", name="admin.posts.new")
      */
-    public function addAction(Request $request)
+    public function newAction(Request $request)
     {
-        $mt = 'Add post';
-        return $this->render('admin/posts/add.html.twig', array(
-            'mt' => $mt
-        ));
+        return parent::newAction($request);
     }
 }

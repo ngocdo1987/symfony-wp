@@ -10,26 +10,26 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class PageType extends AbstractType
+class PostType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('pageTitle', TextType::class);
-        $builder->add('pageSlug', TextType::class);
-        $builder->add('pageImage', FileType::class);
-        $builder->add('pageContent', TextareaType::class);
-        $builder->add('pageStatus', ChoiceType::class, [
+        $builder->add('postTitle', TextType::class);
+        $builder->add('postSlug', TextType::class);
+        $builder->add('postImage', FileType::class);
+        $builder->add('postContent', TextareaType::class);
+        $builder->add('postStatus', ChoiceType::class, [
             'choices' => [
                 'Published' => true,
                 'Draft' => false
             ]
         ]);
-        $builder->add('pageMt', TextType::class);
-        $builder->add('pageMd', TextareaType::class);
-        $builder->add('pageMk', TextareaType::class);
+        $builder->add('postMt', TextType::class);
+        $builder->add('postMd', TextareaType::class);
+        $builder->add('postMk', TextareaType::class);
     }
     
     /**
@@ -38,7 +38,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Page'
+            'data_class' => 'AppBundle\Entity\Post'
         ));
     }
 
@@ -47,7 +47,7 @@ class PageType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_page';
+        return 'appbundle_post';
     }
 
 

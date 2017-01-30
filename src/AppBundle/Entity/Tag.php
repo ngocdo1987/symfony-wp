@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Tag
@@ -76,6 +79,25 @@ class Tag
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     public $updatedAt;
+
+    /**
+     * Many Tags have Many Posts.
+     * @ManyToMany(targetEntity="Post")
+     * @JoinTable(name="posts_tags",
+     *      joinColumns={@JoinColumn(name="tag_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="post_id", referencedColumnName="id")}
+     *      )
+     */
+    private $posts;
+
+    public function __construct() {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function addPost(Post $post)
+    {
+        $this->posts[] = $post;
+    }
 
 
     /**

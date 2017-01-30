@@ -22,7 +22,9 @@
 		        	</td>
 	            	<?php endforeach; ?>
 	                <td class="center">
-	                	Edit / Delete
+	                	<a href="#" class="btn btn-primary btn-xs">Edit</a> 
+
+	                	<a href="#" class="btn btn-danger btn-xs">Delete</a>
 	                </td>
 	            </tr>
 	            <?php endforeach; ?>

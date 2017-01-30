@@ -19,10 +19,10 @@
                 <a href="#"><i class="fa fa-edit fa-fw"></i> Posts<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">All Posts</a>
+                        <a href="<?= $view['router']->path('admin.posts') ?>">All Posts</a>
                     </li>
                     <li>
-                        <a href="#">Add New</a>
+                        <a href="<?= $view['router']->path('admin.posts.new') ?>">Add New</a>
                     </li>
                     <li>
                         <a href="<?= $view['router']->path('admin.categories') ?>">Categories</a>

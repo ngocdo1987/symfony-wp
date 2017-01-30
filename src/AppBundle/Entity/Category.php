@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Category
@@ -84,6 +87,24 @@ class Category
      */
     public $updatedAt;
 
+    /**
+     * Many Categories have Many Posts.
+     * @ManyToMany(targetEntity="Post")
+     * @JoinTable(name="categories_posts",
+     *      joinColumns={@JoinColumn(name="category_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="post_id", referencedColumnName="id")}
+     *      )
+     */
+    private $posts;
+
+    public function __construct() {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function addPost(Post $post)
+    {
+        $this->posts[] = $post;
+    }
 
     /**
      * Get id
