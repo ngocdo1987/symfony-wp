@@ -6,12 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Tag
  *
  * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
+ * @UniqueEntity(
+ *      "tagSlug",
+ *      message = "Tag slug has already been taken."
+ * )
  */
 class Tag
 {
@@ -28,6 +34,9 @@ class Tag
      * @var string
      *
      * @ORM\Column(name="tag_name", type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Tag name is required."
+     * )
      */
     public $tagName;
 
@@ -35,6 +44,9 @@ class Tag
      * @var string
      *
      * @ORM\Column(name="tag_slug", type="string", length=255, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Tag slug is required."
+     * )
      */
     public $tagSlug;
 

@@ -6,12 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Category
  *
  * @ORM\Table(name="categories")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @UniqueEntity(
+ *      "categorySlug",
+ *      message = "Category slug has already been taken."
+ * )
  */
 class Category
 {
@@ -28,6 +34,9 @@ class Category
      * @var string
      *
      * @ORM\Column(name="category_name", type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Category name is required."
+     * )
      */
     public $categoryName;
 
@@ -35,6 +44,9 @@ class Category
      * @var string
      *
      * @ORM\Column(name="category_slug", type="string", length=255, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Category slug is required."
+     * )
      */
     public $categorySlug;
 

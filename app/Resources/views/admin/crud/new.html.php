@@ -5,7 +5,9 @@
 <?php $view['slots']->start('content') ?>
 	<div class="row">
 		<div class="col-lg-9">
-			<?= $view['form']->start($form) ?>
+			<?= $view['form']->start($form, [
+				'attr' => ['novalidate' => 'novalidate']
+			]) ?>
 				
 				<?php foreach($config->cols as $k => $v) : ?>
 					<div class="form-group row">
@@ -15,7 +17,7 @@
 								'attr' => ['class' => 'form-control']
 							]) ?>
 
-							<?= $view['form']->errors($form[$k]) ?>
+							<font color="red"><?= $view['form']->errors($form[$k]) ?></font>
 						</div>
 					</div>
 				<?php endforeach; ?>

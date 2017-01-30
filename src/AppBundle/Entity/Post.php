@@ -6,12 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Post
  *
  * @ORM\Table(name="posts")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
+ * @UniqueEntity(
+ *      "postSlug",
+ *      message = "Post slug has already been taken."
+ * )
  */
 class Post
 {
@@ -28,6 +34,9 @@ class Post
      * @var string
      *
      * @ORM\Column(name="post_title", type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Post title is required."
+     * )
      */
     public $postTitle;
 
@@ -35,6 +44,9 @@ class Post
      * @var string
      *
      * @ORM\Column(name="post_slug", type="string", length=255, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Post slug is required."
+     * )
      */
     public $postSlug;
 

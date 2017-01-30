@@ -3,12 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Page
  *
  * @ORM\Table(name="pages")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PageRepository")
+ * @UniqueEntity(
+ *      "pageSlug",
+ *      message = "Page slug has already been taken."
+ * )
  */
 class Page
 {
@@ -25,6 +31,9 @@ class Page
      * @var string
      *
      * @ORM\Column(name="page_title", type="string", length=255)
+     * @Assert\NotBlank(
+     *      message = "Page title is required."
+     * )
      */
     public $pageTitle;
 
@@ -32,6 +41,9 @@ class Page
      * @var string
      *
      * @ORM\Column(name="page_slug", type="string", length=255, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Page slug is required."
+     * )
      */
     public $pageSlug;
 
