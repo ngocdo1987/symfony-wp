@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CrudController extends Controller
 {
-	protected $singular = '';
-	protected $plural = '';
-	protected $config = [];
+	protected $singular;
+	protected $plural;
+	protected $config;
 
 	public function __construct()
 	{
@@ -59,13 +59,49 @@ class CrudController extends Controller
 		]);
 	}
 
-	public function showAction()
-	{
-
-	}
-
-	public function editAction()
+	public function showAction(Request $request, $id = null)
 	{
 		
+	}
+
+	public function editAction(Request $request, $id = null)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$model = '\AppBundle\Entity\\'.ucfirst($this->singular);
+		$crud = $em->getRepository('AppBundle:'.ucfirst($this->singular))->find($id);
+		//print_r($crud); die('');
+
+		$form = $this->createForm('AppBundle\Form\\'.ucfirst($this->singular).'Type', $crud);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($crud);
+            $em->flush($crud);
+
+            return $this->redirectToRoute('admin.'.$this->plural);
+        }
+
+		return $this->render('admin/crud/edit.html.php', [
+			'singular' => $this->singular,
+			'plural' => $this->plural,
+			'config' => $this->config,
+			'crud' => $crud,
+			'form' => $form->createView()
+		]);
+	}
+
+	public function deleteAction(Request $request, $id = null)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$crud = $em->getRepository('AppBundle:'.ucfirst($this->singular))->find($id);
+		
+		if(!empty($crud)) {
+			$em->remove($crud);
+			$em->flush();
+		}
+
+		return $this->redirectToRoute('admin.'.$this->plural);
 	}
 }

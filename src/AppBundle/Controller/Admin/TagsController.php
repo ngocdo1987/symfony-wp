@@ -26,4 +26,28 @@ class TagsController extends CrudController
     {
         return parent::newAction($request);
     }
+
+    /**
+     * @Route("/admin/tags/show/{id}", name="admin.tags.show")
+     */
+    public function showAction(Request $request, $id = null)
+    {
+        return parent::showAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/tags/edit/{id}", name="admin.tags.edit")
+     */
+    public function editAction(Request $request, $id = null)
+    {
+        return parent::editAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/tags/delete/{id}", name="admin.tags.delete")
+     */
+    public function deleteAction(Request $request, $id = null)
+    {
+        return parent::deleteAction($request, $id);
+    }
 }

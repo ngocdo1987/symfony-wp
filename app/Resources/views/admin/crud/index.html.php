@@ -22,9 +22,9 @@
 		        	</td>
 	            	<?php endforeach; ?>
 	                <td class="center">
-	                	<a href="#" class="btn btn-primary btn-xs">Edit</a> 
+	                	<a href="<?= $view['router']->path('admin.'.$plural.'.edit', ['id' => $crud->id]) ?>" class="btn btn-primary btn-xs">Edit</a> 
 
-	                	<a href="#" class="btn btn-danger btn-xs">Delete</a>
+	                	<a href="<?= $view['router']->path('admin.'.$plural.'.delete', ['id' => $crud->id]) ?>" class="btn btn-danger btn-xs">Delete</a>
 	                </td>
 	            </tr>
 	            <?php endforeach; ?>

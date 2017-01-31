@@ -26,4 +26,28 @@ class PostsController extends CrudController
     {
         return parent::newAction($request);
     }
+
+    /**
+     * @Route("/admin/posts/show/{id}", name="admin.posts.show")
+     */
+    public function showAction(Request $request, $id = null)
+    {
+        return parent::showAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/posts/edit/{id}", name="admin.posts.edit")
+     */
+    public function editAction(Request $request, $id = null)
+    {
+        return parent::editAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/posts/delete/{id}", name="admin.posts.delete")
+     */
+    public function deleteAction(Request $request, $id = null)
+    {
+        return parent::deleteAction($request, $id);
+    }
 }

@@ -26,4 +26,28 @@ class CategoriesController extends CrudController
     {
         return parent::newAction($request);
     }
+
+    /**
+     * @Route("/admin/categories/show/{id}", name="admin.categories.show")
+     */
+    public function showAction(Request $request, $id = null)
+    {
+        return parent::showAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/categories/edit/{id}", name="admin.categories.edit")
+     */
+    public function editAction(Request $request, $id = null)
+    {
+        return parent::editAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/categories/delete/{id}", name="admin.categories.delete")
+     */
+    public function deleteAction(Request $request, $id = null)
+    {
+        return parent::deleteAction($request, $id);
+    }
 }

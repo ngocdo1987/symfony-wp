@@ -26,4 +26,28 @@ class PagesController extends CrudController
     {
         return parent::newAction($request);
     }
+
+    /**
+     * @Route("/admin/pages/show/{id}", name="admin.pages.show")
+     */
+    public function showAction(Request $request, $id = null)
+    {
+        return parent::showAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/pages/edit/{id}", name="admin.pages.edit")
+     */
+    public function editAction(Request $request, $id = null)
+    {
+        return parent::editAction($request, $id);
+    }
+
+    /**
+     * @Route("/admin/pages/delete/{id}", name="admin.pages.delete")
+     */
+    public function deleteAction(Request $request, $id = null)
+    {
+        return parent::deleteAction($request, $id);
+    }
 }
