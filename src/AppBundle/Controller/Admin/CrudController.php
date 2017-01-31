@@ -36,6 +36,9 @@ class CrudController extends Controller
 
 	public function newAction(Request $request)
 	{
+		$em = $this->getDoctrine()->getManager();
+
+		$config = $this->config;
 		$model = '\AppBundle\Entity\\'.ucfirst($this->singular);
 		$crud = new $model;
 
@@ -43,20 +46,31 @@ class CrudController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getManager();
             $em->persist($crud);
             $em->flush($crud);
 
             return $this->redirectToRoute('admin.'.$this->plural);
         }
 
-		return $this->render('admin/crud/new.html.php', [
-			'singular' => $this->singular,
+        $render_vars = [
+        	'singular' => $this->singular,
 			'plural' => $this->plural,
-			'config' => $this->config,
+			'config' => $config,
 			'crud' => $crud,
 			'form' => $form->createView()
-		]);
+        ];
+
+        // Check n-n
+        if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+		{
+			foreach($config->relation->nn as $k => $v)
+			{
+				$render_vars[$k] = $em->getRepository('AppBundle:'.ucfirst($k))->findAll();
+			}
+		}
+
+		return $this->render('admin/crud/new.html.php', $render_vars);
 	}
 
 	public function showAction(Request $request, $id = null)
@@ -68,6 +82,7 @@ class CrudController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
+		$config = $this->config;
 		$model = '\AppBundle\Entity\\'.ucfirst($this->singular);
 		$crud = $em->getRepository('AppBundle:'.ucfirst($this->singular))->find($id);
 		//print_r($crud); die('');
@@ -75,29 +90,42 @@ class CrudController extends Controller
 		$form = $this->createForm('AppBundle\Form\\'.ucfirst($this->singular).'Type', $crud);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            //$em = $this->getDoctrine()->getManager();
             $em->persist($crud);
             $em->flush($crud);
 
             return $this->redirectToRoute('admin.'.$this->plural);
         }
 
-		return $this->render('admin/crud/edit.html.php', [
-			'singular' => $this->singular,
+        $render_vars = [
+        	'singular' => $this->singular,
 			'plural' => $this->plural,
-			'config' => $this->config,
+			'config' => $config,
 			'crud' => $crud,
 			'form' => $form->createView()
-		]);
+        ];
+
+       	// Check n-n
+        if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+		{
+			foreach($config->relation->nn as $k => $v)
+			{
+				$render_vars[$k] = $em->getRepository('AppBundle:'.ucfirst($k))->findAll();
+			}
+		}
+
+		return $this->render('admin/crud/edit.html.php', $render_vars);
 	}
 
 	public function deleteAction(Request $request, $id = null)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$crud = $em->getRepository('AppBundle:'.ucfirst($this->singular))->find($id);
-		
-		if(!empty($crud)) {
+
+		if(!empty($crud)) 
+		{
 			$em->remove($crud);
 			$em->flush();
 		}

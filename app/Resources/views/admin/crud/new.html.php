@@ -4,11 +4,10 @@
 
 <?php $view['slots']->start('content') ?>
 	<div class="row">
-		<div class="col-lg-9">
-			<?= $view['form']->start($form, [
-				'attr' => ['novalidate' => 'novalidate']
-			]) ?>
-				
+		<?= $view['form']->start($form, [
+			'attr' => ['novalidate' => 'novalidate']
+		]) ?>
+			<div class="col-lg-9">
 				<?php foreach($config->cols as $k => $v) : ?>
 					<div class="form-group row">
 						<div class="col-lg-12">
@@ -28,8 +27,21 @@
 						<a href="<?= $view['router']->path('admin.'.$plural) ?>" class="btn btn-primary">BACK</a>
 					</div>
 				</div>
+			</div>
 
-			<?= $view['form']->end($form) ?>
-		</div>
+			<div class="col-lg-3">
+				<?php if(isset($config->relation->nn) && count($config->relation->nn) > 0) : ?>
+					<?php foreach($config->relation->nn as $singular_model => $v) : ?>
+						<h3><?= ucfirst($singular_model) ?></h3>
+
+						<?php foreach($$singular_model as $sm) : 
+							$target_label = $v->target_label;
+						?>
+							<input type="checkbox" name="<?= $singular_model ?>[]" value="<?= $sm->id ?>" /> <?= $sm->$target_label ?> <br/>
+						<?php endforeach; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</div>
+		<?= $view['form']->end($form) ?>
 	</div>	
 <?php $view['slots']->stop() ?>
