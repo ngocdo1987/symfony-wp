@@ -36,8 +36,10 @@
 
 						<?php foreach($$singular_model as $sm) : 
 							$target_label = $v->target_label;
+							$singular_model_related_ids = $singular_model.'_related_ids';
+                    		$checked = (isset($$singular_model_related_ids) && in_array($sm->id, $$singular_model_related_ids)) ? ' checked="checked"' : '';
 						?>
-							<input type="checkbox" name="<?= $singular_model ?>[]" value="<?= $sm->id ?>" /> <?= $sm->$target_label ?> <br/>
+							<input type="checkbox" name="<?= $singular_model ?>[]" value="<?= $sm->id ?>"<?=$checked?> /> <?= $sm->$target_label ?> <br/>
 						<?php endforeach; ?>
 					<?php endforeach; ?>
 				<?php endif; ?>

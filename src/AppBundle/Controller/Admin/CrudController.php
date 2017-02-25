@@ -46,7 +46,34 @@ class CrudController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$em = $this->getDoctrine()->getManager();
+        	//echo '<pre>'; print_r($request->request->all()); echo '<pre>'; die('');
+
+        	$input = $request->request->all();
+
+        	// Check n-n
+            if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+            {
+            	foreach($config->relation->nn as $singular_model => $v)
+                {
+                	$singular_model_ids = isset($input[$singular_model]) ? $input[$singular_model] : array();
+                    //$plural_model = $v->func;
+
+                    if(!empty($singular_model_ids))
+                    {
+                    	foreach($singular_model_ids as $smi)
+                    	{
+                    		$sync = $em->getRepository('AppBundle:'.ucfirst($singular_model))->find($smi);
+                    		if($sync)
+                    		{
+                    			$add_func = 'add'.ucfirst($singular_model);
+                    			$crud->$add_func($sync);
+                    		}
+                    	}
+                    	
+                    }
+                }
+            }
+
             $em->persist($crud);
             $em->flush($crud);
 
@@ -85,7 +112,6 @@ class CrudController extends Controller
 		$config = $this->config;
 		$model = '\AppBundle\Entity\\'.ucfirst($this->singular);
 		$crud = $em->getRepository('AppBundle:'.ucfirst($this->singular))->find($id);
-		//print_r($crud); die('');
 
 		$form = $this->createForm('AppBundle\Form\\'.ucfirst($this->singular).'Type', $crud);
         $form->handleRequest($request);
@@ -112,7 +138,21 @@ class CrudController extends Controller
 		{
 			foreach($config->relation->nn as $k => $v)
 			{
+				$singular_model_related_ids = $k.'_related_ids';
+                $$singular_model_related_ids = [];
+                $plural_model = $v->func;
+
 				$render_vars[$k] = $em->getRepository('AppBundle:'.ucfirst($k))->findAll();
+
+				if(!empty($crud->$plural_model))
+				{
+					foreach($crud->$plural_model as $cp)
+					{
+						$$singular_model_related_ids[] = $cp->id;
+					}
+				}
+
+				$render_vars[$singular_model_related_ids] = $$singular_model_related_ids;
 			}
 		}
 

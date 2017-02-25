@@ -8,12 +8,34 @@
 			'attr' => ['novalidate' => 'novalidate']
 		]) ?>
 			<div class="col-lg-9">
-				<?php foreach($config->cols as $k => $v) : ?>
+				<?php foreach($config->cols as $k => $v) : 
+					$attr = [
+						'class' => 'form-control'
+					];
+
+					switch($v->type) {
+						case 'textarea':
+							$attr['rows'] = 8;
+							break;
+						case 'ckeditor':
+							$attr['rows'] = 8;
+							//$attr['id'] = 'ckeditor';
+							break;	
+						case 'tinymce':
+							$attr['rows'] = 8;
+							//$attr['id'] = 'tinymce';
+							break;	
+						case 'summernote':
+							$attr['rows'] = 8;
+							$attr['class'] = 'form-control summernote';
+							break;	
+					}
+				?>
 					<div class="form-group row">
 						<div class="col-lg-12">
 							<?= $v->label ?><br/>
 							<?= $view['form']->widget($form[$k], [
-								'attr' => ['class' => 'form-control']
+								'attr' => $attr
 							]) ?>
 
 							<font color="red"><?= $view['form']->errors($form[$k]) ?></font>

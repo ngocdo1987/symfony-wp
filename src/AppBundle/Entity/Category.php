@@ -107,7 +107,7 @@ class Category
      *      inverseJoinColumns={@JoinColumn(name="post_id", referencedColumnName="id")}
      *      )
      */
-    private $posts;
+    public $posts;
 
     public function __construct() {
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();

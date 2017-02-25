@@ -114,7 +114,7 @@ class Post
      *      inverseJoinColumns={@JoinColumn(name="category_id", referencedColumnName="id")}
      *      )
      */
-    private $categories;
+    public $categories;
 
     /**
      * Many Posts have Many Tags.
@@ -124,7 +124,7 @@ class Post
      *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id")}
      *      )
      */
-    private $tags;
+    public $tags;
 
     public function __construct() {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();

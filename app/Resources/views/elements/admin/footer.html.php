@@ -25,6 +25,17 @@
 			CKEDITOR.replace( 'ckeditor' );
 		});
 	</script>
+
+	<!-- Summernote -->
+	<link href="<?= $view['assets']->getUrl('js/summernote/summernote.css') ?>" rel="stylesheet">
+	<script src="<?= $view['assets']->getUrl('js/summernote/summernote.js') ?>"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 300
+            });
+        });
+    </script>
 </body>
 
 </html>
