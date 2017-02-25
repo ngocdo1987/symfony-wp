@@ -45,10 +45,9 @@ class CrudController extends Controller
 		$form = $this->createForm('AppBundle\Form\\'.ucfirst($this->singular).'Type', $crud);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-        	//echo '<pre>'; print_r($request->request->all()); echo '<pre>'; die('');
-
-        	$input = $request->request->all();
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+			$input = $request->request->all();
 
         	// Check n-n
             if(isset($config->relation->nn) && count($config->relation->nn) > 0)
@@ -118,7 +117,38 @@ class CrudController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            //$em = $this->getDoctrine()->getManager();
+            $input = $request->request->all();
+
+            // Check n-n
+            if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+            {
+            	foreach($config->relation->nn as $singular_model => $v)
+                {
+                	$singular_model_ids = isset($input[$singular_model]) ? $input[$singular_model] : array();
+                	$plural_model = $v->func;
+
+                	// Delete old n-n
+                	$remove_func = 'removeAll'.ucfirst($plural_model);
+                	$crud->$remove_func();
+
+                	if(!empty($singular_model_ids))
+                    {
+                    	foreach($singular_model_ids as $smi)
+                    	{
+                    		$sync = $em->getRepository('AppBundle:'.ucfirst($singular_model))->find($smi);
+                    		if($sync)
+                    		{
+                    			$add_func = 'add'.ucfirst($singular_model);
+                    			$crud->$add_func($sync);
+                    		}
+                    	}
+                    	
+                    }
+                }
+            }
+
+            //die('');
+
             $em->persist($crud);
             $em->flush($crud);
 

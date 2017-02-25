@@ -131,16 +131,92 @@ class Post
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * @param Category $category
+     */
     public function addCategory(Category $category)
     {
+        if (true === $this->categories->contains($category)) {
+            return;
+        }
+
         $category->addPost($this);
         $this->categories[] = $category;
     }
 
+    /**
+     * @param Category $category
+     */
+    public function removeCategory(Category $category)
+    {
+        if (false === $this->categories->contains($category)) {
+            return;
+        }
+
+        $category->removePost($this);
+        $this->categories->removeElement($category);
+    }
+
+    public function removeAllCategories()
+    {
+        if(!empty($this->categories)) {
+            foreach($this->categories as $c) {
+                $c->removePost($this);
+                $this->categories->removeElement($c);
+            }
+        }
+    }
+
+    /**
+     * @param Tag $tag
+     */
     public function addTag(Tag $tag)
     {
+        if (true === $this->tags->contains($tag)) {
+            return;
+        }
+
         $tag->addPost($this);
         $this->tags[] = $tag;
+    }
+
+    /**
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        if (false === $this->tags->contains($tag)) {
+            return;
+        }
+
+        $tag->removePost($this);
+        $this->tags->removeElement($tag);
+    }
+
+    public function removeAllTags()
+    {
+        if(!empty($this->tags)) {
+            foreach($this->tags as $t) {
+                $t->removePost($this);
+                $this->tags->removeElement($t);
+            }
+        }
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|Category[]
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|Tag[]
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     /**

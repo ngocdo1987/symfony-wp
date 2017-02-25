@@ -106,11 +106,49 @@ class Tag
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * @param Post $post
+     */
     public function addPost(Post $post)
     {
+        if (true === $this->posts->contains($post)) {
+            return;
+        }
+
+        //$post->addTag($this);
         $this->posts[] = $post;
     }
 
+    /**
+     * @param Post $post
+     */
+    public function removePost(Post $post)
+    {
+        if (false === $this->posts->contains($post)) {
+            return;
+        }
+
+        //$post->removeTag($this);
+        $this->posts->removeElement($post);
+    }
+
+    public function removeAllPosts()
+    {
+        if(!empty($this->posts)) {
+            foreach($this->posts as $p) {
+                //$p->removeTag($this);
+                $this->posts->removeElement($p);
+            }
+        }
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection|Post[]
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
 
     /**
      * Get id
